@@ -1,4 +1,4 @@
-package com.example.duriseo_be;
+package me.goldm0ng.duriseo_be;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

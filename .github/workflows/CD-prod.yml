@@ -14,7 +14,7 @@ jobs:
           distribution: "corretto"
           java-version: "21"
       - name: Create application.yml file
-        working_directory: ./
+        working-directory: ./
         run: |
           pwd
           touch ./src/main/resources/application.yml

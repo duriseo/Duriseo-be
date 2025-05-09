@@ -13,6 +13,11 @@ jobs:
         with:
           distribution: "corretto"
           java-version: "21"
+      - name: application.yml
+        run: |
+            touch ./src/main/resources/application.yml
+            echo "${{ secrets.APPLICATION_YML }}" > ./src/main/resources/application.yml
+            cat ./src/main/resources/application.yml
       - name: 빌드
         run: |
           chmod +x gradlew

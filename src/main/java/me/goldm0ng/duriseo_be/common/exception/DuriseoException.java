@@ -8,7 +8,7 @@ public class DuriseoException extends RuntimeException {
 
     private final FailMessage failMessage;
 
-    private DuriseoException(final FailMessage failMessage) {
+    public DuriseoException(final FailMessage failMessage) {
         super (failMessage.getMessage());
         this.failMessage = failMessage;
     }

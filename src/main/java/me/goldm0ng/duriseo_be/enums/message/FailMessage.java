@@ -28,9 +28,8 @@ public enum FailMessage {
     //404
     NOT_FOUND(HttpStatus.NOT_FOUND, 40400, "리소스를 찾을 수 없습니다."),
     NOT_FOUND_API(HttpStatus.NOT_FOUND, 40401, "잘못된 API입니다."),
-    NOT_FOUND_USER(HttpStatus.NOT_FOUND, 40402, "유저를 찾을 수 없습니다."),
-    NOT_FOUND_CLUB(HttpStatus.NOT_FOUND, 40403, "동아리를 찾을 수 없습니다."),
-    NOT_FOUND_FAVORITE(HttpStatus.NOT_FOUND, 40404, "즐겨찾기 한 동아리를 찾을 수 없습니다."),
+    NOT_FOUND_USER(HttpStatus.NOT_FOUND, 40402, "사용자를 찾을 수 없습니다."),
+    NOT_FOUND_BENEFICIARY(HttpStatus.NOT_FOUND, 40403, "사회적 약자로 등록되지 않은 사용자입니다."),
 
 
     //405
@@ -39,7 +38,7 @@ public enum FailMessage {
     //409
     CONFLICT(HttpStatus.CONFLICT, 40900, "서버의 현재 상태와 요청이 충돌했습니다."),
     CONFLICT_INTEGRITY(HttpStatus.CONFLICT, 40901, "데이터 무결성 위반입니다."),
-    CONFLICT_FAVORITE(HttpStatus.CONFLICT, 40902, "이미 즐겨찾기 목록에 추가된 동아리입니다."),
+    CONFLICT_DOCUMENT(HttpStatus.CONFLICT, 40902, "이미 인증 서류를 제출한 사용자입니다."),
 
     //500
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, 50000, "서버 내부 오류가 발생했습니다."),

@@ -30,6 +30,7 @@ public enum FailMessage {
     NOT_FOUND_API(HttpStatus.NOT_FOUND, 40401, "잘못된 API입니다."),
     NOT_FOUND_USER(HttpStatus.NOT_FOUND, 40402, "사용자를 찾을 수 없습니다."),
     NOT_FOUND_BENEFICIARY(HttpStatus.NOT_FOUND, 40403, "사회적 약자로 등록되지 않은 사용자입니다."),
+    NOT_FOUND_RESTAURANT(HttpStatus.NOT_FOUND, 40404, "가게를 찾을 수 없습니다."),
 
 
     //405

@@ -1,6 +1,7 @@
 package me.goldm0ng.duriseo_be.api.user.controller;
 
 import lombok.RequiredArgsConstructor;
+import me.goldm0ng.duriseo_be.api.user.dto.AuthResponse;
 import me.goldm0ng.duriseo_be.api.user.dto.LoginRequest;
 import me.goldm0ng.duriseo_be.api.user.dto.SignupRequest;
 import me.goldm0ng.duriseo_be.api.user.dto.UserProfileResponse;
@@ -31,9 +32,9 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Map<String,String>> login(@RequestBody @Validated LoginRequest dto) {
-        String jwt = authService.login(dto);
-        ResponseCookie cookie = ResponseCookie.from("token", jwt)
+    public ResponseEntity<AuthResponse> login(@RequestBody @Validated LoginRequest dto) {
+        String token = authService.login(dto);
+        ResponseCookie cookie = ResponseCookie.from("token", token)
                 .httpOnly(true)
                 .secure(true) // HTTPS에서만 동작 (로컬 개발 시 false 가능)
                 .path("/")
@@ -43,7 +44,7 @@ public class AuthController {
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, cookie.toString())
-                .body(Map.of("message", "Login successful"));
+                .body(new AuthResponse(token));
     }
 
     @GetMapping("/profile")

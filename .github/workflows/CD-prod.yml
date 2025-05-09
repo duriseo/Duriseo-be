@@ -16,10 +16,10 @@ jobs:
       - name: Create application.yml file
         working-directory: ./
         run: |
-          pwd
-          touch ./src/main/resources/application.yml
-          echo "${{ secrets.APPLICATION_YML }}" > ./src/main/resources/application.yml
-          cat ./src/main/resources/application.yml
+          mkdir -p ./src/main/resources
+          cd ./src/main/resources
+          touch ./application.yml
+          echo "${{ secrets.CD_APPLICATION_YML }}" > ./application.yml
       - name: 빌드
         run: |
           chmod +x gradlew

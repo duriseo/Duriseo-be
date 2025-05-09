@@ -35,7 +35,9 @@ public class Restaurant {
     @Column(nullable = false)
     private String phoneNumber;
 
+    @Column(precision = 8, scale = 5)
     private BigDecimal latitude;
+    @Column(precision = 8, scale = 5)
     private BigDecimal longitude;
 
     @CreationTimestamp

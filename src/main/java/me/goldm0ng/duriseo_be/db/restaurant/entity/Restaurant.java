@@ -32,6 +32,9 @@ public class Restaurant {
     @Column(nullable = false)
     private String address;
 
+    @Column(nullable = false)
+    private String phoneNumber;
+
     private BigDecimal latitude;
     private BigDecimal longitude;
 
@@ -42,10 +45,11 @@ public class Restaurant {
     private LocalDateTime updatedAt;
 
     @Builder
-    public Restaurant(final User owner, final String name, final String address, final BigDecimal latitude, final BigDecimal longitude, final LocalDateTime createdAt, final LocalDateTime updatedAt) {
+    public Restaurant(final User owner, final String name, final String address, final String phoneNumber,final BigDecimal latitude, final BigDecimal longitude, final LocalDateTime createdAt, final LocalDateTime updatedAt) {
         this.owner = owner;
         this.name = name;
         this.address = address;
+        this.phoneNumber = phoneNumber;
         this.latitude = latitude;
         this.longitude = longitude;
         this.createdAt = createdAt;

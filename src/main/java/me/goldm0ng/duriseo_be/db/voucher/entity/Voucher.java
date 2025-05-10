@@ -1,18 +1,17 @@
 package me.goldm0ng.duriseo_be.db.voucher.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import me.goldm0ng.duriseo_be.db.restaurant.entity.Restaurant;
 import me.goldm0ng.duriseo_be.db.user.entity.User;
 import me.goldm0ng.duriseo_be.enums.user.Role;
 import me.goldm0ng.duriseo_be.enums.voucher.VoucherStatus;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+@Setter
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -43,22 +42,26 @@ public class Voucher {
     private User recipient;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(nullable = false,length = 32)
     private VoucherStatus status;
 
-    private LocalDate expireAt;
+    @Column(nullable = false)
+    private LocalDate expiredAt;
+
+    @CreationTimestamp
     private LocalDateTime createdAt;
+
     private LocalDateTime usedAt;
 
     @Builder
-    public Voucher(final String code, final Restaurant restaurant, final User issuedBy, final Role issuedByRole, final User recipient, final VoucherStatus status, final LocalDate expireAt, final LocalDateTime createdAt, final LocalDateTime usedAt) {
+    public Voucher(final String code, final Restaurant restaurant, final User issuedBy, final Role issuedByRole, final User recipient, final VoucherStatus status, final LocalDate expiredAt, final LocalDateTime createdAt, final LocalDateTime usedAt) {
         this.code = code;
         this.restaurant = restaurant;
         this.issuedBy = issuedBy;
         this.issuedByRole = issuedByRole;
         this.recipient = recipient;
         this.status = status;
-        this.expireAt = expireAt;
+        this.expiredAt = expiredAt;
         this.createdAt = createdAt;
         this.usedAt = usedAt;
     }

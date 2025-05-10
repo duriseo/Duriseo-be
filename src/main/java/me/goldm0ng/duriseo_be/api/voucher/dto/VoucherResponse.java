@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 public class VoucherResponse {
     private Long id;
     private Long restaurantId;
+    private String restaurantName;
     private Long issuedUserId;
     private Role issuedRole;
     private String code;

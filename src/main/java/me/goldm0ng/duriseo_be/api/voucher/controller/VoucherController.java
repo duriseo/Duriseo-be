@@ -26,6 +26,13 @@ public class VoucherController {
         return APISuccessResponse.of(HttpStatus.CREATED, voucherService.issueVouchers(request, restaurant_id));
     }
 
+    @PostMapping("/donate/{restaurant_id}")
+    @PreAuthorize("hasRole('DONOR')")
+    public ResponseEntity<APISuccessResponse<Void>> issueVouchersByDonor(@RequestBody VoucherRequest request,
+                                                                  @PathVariable(name = "restaurant_id") Long restaurant_id) {
+        return APISuccessResponse.of(HttpStatus.CREATED, voucherService.issueVouchersByDonor(request, restaurant_id));
+    }
+
     @PostMapping("/acquired/{voucher_id}")
     @PreAuthorize("hasRole('BENEFICIARY')")
     public ResponseEntity<APISuccessResponse<Void>> acquiredVoucher(@PathVariable(name = "voucher_id") Long voucherId) {
@@ -37,4 +44,11 @@ public class VoucherController {
     public ResponseEntity<APISuccessResponse<VouchersResponse>> listVouchers() {
         return APISuccessResponse.of(HttpStatus.OK, voucherService.listVouchers());
     }
+
+    @PostMapping("redeem/{voucher_id}")
+    @PreAuthorize("hasRole('RESTAURANT_OWNER')")
+    public ResponseEntity<APISuccessResponse<Void>> redeemVoucher(@PathVariable(name = "voucher_id") Long voucherId) {
+        return APISuccessResponse.of(HttpStatus.OK, voucherService.redeemVoucher(voucherId));
+    }
+
 }

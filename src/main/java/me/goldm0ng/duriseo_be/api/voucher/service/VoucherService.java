@@ -56,6 +56,28 @@ public class VoucherService {
         return null;
     }
 
+    public Void issueVouchersByDonor(VoucherRequest request, Long restaurantId) {
+        Restaurant restaurant = restaurantRepository.findById(restaurantId)
+                .orElseThrow(() -> new DuriseoException(FailMessage.NOT_FOUND_RESTAURANT));
+
+        for (int i = 0; i <request.getCount() ; i++) {
+            Voucher voucher = Voucher.builder()
+                    .code(String.valueOf(UUID.randomUUID()))
+                    .restaurant(restaurant)
+                    .issuedBy(restaurant.getOwner())
+                    .issuedByRole(Role.RESTAURANT_OWNER)
+                    .status(VoucherStatus.ISSUED)
+                    .recipient(null)
+                    .expiredAt(request.getExpiredAt())
+                    .createdAt(LocalDateTime.now())
+                    .usedAt(null)
+                    .build();
+
+            voucherRepository.save(voucher);
+        }
+        return null;
+    }
+
     @Transactional
     public Void acquiredVoucher(Long voucherId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -97,6 +119,7 @@ public class VoucherService {
                 .map(v -> new VoucherResponse(
                         v.getId(),
                         v.getRestaurant().getId(),
+                        v.getRestaurant().getName(),
                         v.getIssuedBy().getId(),
                         v.getIssuedByRole(),
                         v.getCode(),
@@ -108,5 +131,16 @@ public class VoucherService {
                 .collect(Collectors.toList());
 
         return new VouchersResponse(dtos);
+    }
+
+    public Void redeemVoucher(Long voucherId) {
+        Voucher voucher = voucherRepository.findById(voucherId)
+                .orElseThrow(() -> new DuriseoException(FailMessage.NOT_FOUND_VOUCHER));
+
+        voucher.setUsedAt(LocalDateTime.now());
+        voucher.setStatus(VoucherStatus.REDEEMED_TO_OWNER);
+        voucherRepository.save(voucher);
+
+        return null;
     }
 }

@@ -27,10 +27,10 @@ public class RestaurantController {
         return APISuccessResponse.of(HttpStatus.CREATED, restaurantService.signUpRestaurant(request));
     }
 
-    @GetMapping("/{restaurant_id}")
-    public ResponseEntity<APISuccessResponse<RestaurantResponse>> findRestaurant(@PathVariable(name = "restaurant_id") Long restaurant_id) {
-        return APISuccessResponse.of(HttpStatus.OK, restaurantService.findRestaurant(restaurant_id));
-    }
+//    @GetMapping("/{restaurant_id}")
+//    public ResponseEntity<APISuccessResponse<RestaurantResponse>> findRestaurant(@PathVariable(name = "restaurant_id") Long restaurant_id) {
+//        return APISuccessResponse.of(HttpStatus.OK, restaurantService.findRestaurant(restaurant_id));
+//    }
 
     @GetMapping()
     public ResponseEntity<APISuccessResponse<RestaurantsResponse>> findAllRestaurants() {

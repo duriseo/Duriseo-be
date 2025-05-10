@@ -9,6 +9,7 @@ import me.goldm0ng.duriseo_be.db.restaurant.entity.Restaurant;
 import me.goldm0ng.duriseo_be.db.restaurant.repository.RestaurantRepository;
 import me.goldm0ng.duriseo_be.db.user.entity.User;
 import me.goldm0ng.duriseo_be.db.user.repository.UserRepository;
+import me.goldm0ng.duriseo_be.db.voucher.entity.Voucher;
 import me.goldm0ng.duriseo_be.db.voucher.repository.VoucherRepository;
 import me.goldm0ng.duriseo_be.enums.message.FailMessage;
 import me.goldm0ng.duriseo_be.enums.voucher.VoucherStatus;
@@ -49,29 +50,32 @@ public class RestaurantService {
         return null;
     }
 
-    @Transactional(readOnly = true)
-    public RestaurantResponse findRestaurant(Long restaurant_id) {
-        Restaurant restaurant = restaurantRepository.findById(restaurant_id)
-                .orElseThrow(()-> new DuriseoException(FailMessage.NOT_FOUND_RESTAURANT));
-
-        int remainingVouchers = voucherRepository.countByRestaurantAndStatus(restaurant, VoucherStatus.ISSUED);
-        return new RestaurantResponse(
-                restaurant.getId(),
-                restaurant.getName(),
-                restaurant.getOwner().getId(),
-                remainingVouchers,
-                restaurant.getAddress(),
-                restaurant.getPhoneNumber(),
-                restaurant.getLatitude(),
-                restaurant.getLongitude(),
-                restaurant.getCreatedAt()
-        );
-    }
+//    @Transactional(readOnly = true)
+//    public RestaurantResponse findRestaurant(Long restaurant_id) {
+//        Restaurant restaurant = restaurantRepository.findById(restaurant_id)
+//                .orElseThrow(()-> new DuriseoException(FailMessage.NOT_FOUND_RESTAURANT));
+//
+//        int remainingVouchers = voucherRepository.countByRestaurantAndStatus(restaurant, VoucherStatus.ISSUED);
+//        return new RestaurantResponse(
+//                restaurant.getId(),
+//                restaurant.getName(),
+//                restaurant.getOwner().getId(),
+//                remainingVouchers,
+//                restaurant.getAddress(),
+//                restaurant.getPhoneNumber(),
+//                restaurant.getLatitude(),
+//                restaurant.getLongitude(),
+//                restaurant.getCreatedAt()
+//        );
+//    }
 
     @Transactional(readOnly = true)
     public RestaurantsResponse findAllRestaurants() {
         List<RestaurantResponse> responses = restaurantRepository.findAll().stream()
                 .map(restaurant -> {
+
+                    List<Long> voucherIds = voucherRepository.findAllByRestaurantAndStatus(restaurant,VoucherStatus.ISSUED)
+                            .stream().map(Voucher::getId).collect(Collectors.toList());
                     long remainingVouchers = voucherRepository.countByRestaurantAndStatus(
                             restaurant, VoucherStatus.ISSUED
                     );
@@ -79,6 +83,7 @@ public class RestaurantService {
                             restaurant.getId(),
                             restaurant.getName(),
                             restaurant.getOwner().getId(),
+                            voucherIds,
                             (int) remainingVouchers,
                             restaurant.getAddress(),
                             restaurant.getPhoneNumber(),

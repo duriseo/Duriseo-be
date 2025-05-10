@@ -58,6 +58,7 @@ public class RestaurantService {
         return new RestaurantResponse(
                 restaurant.getId(),
                 restaurant.getName(),
+                restaurant.getOwner().getId(),
                 remainingVouchers,
                 restaurant.getAddress(),
                 restaurant.getPhoneNumber(),
@@ -77,6 +78,7 @@ public class RestaurantService {
                     return new RestaurantResponse(
                             restaurant.getId(),
                             restaurant.getName(),
+                            restaurant.getOwner().getId(),
                             (int) remainingVouchers,
                             restaurant.getAddress(),
                             restaurant.getPhoneNumber(),

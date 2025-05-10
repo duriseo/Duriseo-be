@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 public class RestaurantResponse {
     private Long id;
     private String name;
+    private Long ownerId;
     private int remainingVouchers;
     private String address;
     private String phoneNumber;
